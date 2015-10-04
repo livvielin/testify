@@ -1,7 +1,6 @@
 var assert = chai.assert;
 var should = chai.should();
 var expect = chai.expect;
-// var util = require('../../client/scripts/todo/todo.util');
 
 describe('the todo.App', function() {
   describe('the todo object', function(){

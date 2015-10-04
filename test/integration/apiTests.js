@@ -1,3 +1,7 @@
+var assert = chai.assert;
+var should = chai.should();
+var expect = chai.expect;
+
 describe('API integration', function(){
   var server, setupStub, JSONresponse;
 
@@ -21,12 +25,17 @@ describe('API integration', function(){
 
   before(function () {
     server = sinon.fakeServer.create();
-    setupStub = sinon.stub($, 'ajax').yieldTo('success', fakeData);
+    setupStub = sinon.stub(request, 'get').yieldTo(null, fakeData);
+    server.respondWith(
+      "GET",
+      setupStub,
+      [200, { "Content-Type": "application/json" }, JSON.stringify(fakeData)]
+    );
   });
 
   after(function () {
     server.restore();
-    $.ajax.restore();
+    request.get.restore();
   });
 
   it('todo.setup receives an array of todos when todo.init is called', function () {
