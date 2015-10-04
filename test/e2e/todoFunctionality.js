@@ -33,9 +33,28 @@ casper.test.begin('Adds and removes todo items', 2, function suite(test) {
 });
 
 // Test that adds and removes multiple todo items
-casper.test.begin('Adds and removes multiple todo items', 3, function suite(test) {
+casper.test.begin('Adds and removes multiple todo items', 2, function suite(test) {
   casper.start('http://localhost:3000/', function() {
-    //
+    this.fill('.todo-form', {
+      todo: 'Eat pie'
+    }, true);
+    this.fill('.todo-form', {
+      todo: 'Play soccer'
+    }, true);
+    this.fill('.todo-form', {
+      todo: 'Code'
+    }, true);
+
+    // Check that all items were added to the list
+    test.assertElementCount('.todo-list .todo-item', 3, 'Three items should have been added');
+
+    // Mark items as complete and remove
+    this.click('.todo-remove');
+    this.click('.todo-remove');
+    this.click('.todo-remove');
+
+    // Check that there are no items left on the list
+    test.assertElementCount('.todo-list .todo-item', 0, 'There should be no items left after removed');
   });
 
   casper.run(function() {
