@@ -11,9 +11,20 @@ casper.test.begin('App is setup correctly', 2, function suite(test) {
 });
 
 // Test that adds and removes todo items
-casper.test.begin('Adds and removes todo items', 3, function suite(test) {
+casper.test.begin('Adds and removes todo items', 2, function suite(test) {
   casper.start('http://localhost:3000/', function() {
-    //
+    this.fill('.todo-form', {
+      todo: 'Eat pie'
+    }, true);
+
+    // Check if the item was added to the list
+    test.assertExists('.todo-list .todo-item', 'Item should exist after added');
+
+    // Mark item as complete and remove
+    this.click('.todo-remove');
+
+    // Check that item no longer exists
+    test.assertDoesntExist('.todo-list .todo-item', 'Item should not exist after removed');
   });
 
   casper.run(function() {
