@@ -13,6 +13,7 @@ casper.test.begin('App is setup correctly', 2, function suite(test) {
 // Test that adds and removes todo items
 casper.test.begin('Adds and removes todo items', 2, function suite(test) {
   casper.start('http://localhost:3000/', function() {
+    // Add item to the list
     this.fill('.todo-form', {
       todo: 'Eat pie'
     }, true);
@@ -35,6 +36,7 @@ casper.test.begin('Adds and removes todo items', 2, function suite(test) {
 // Test that adds and removes multiple todo items
 casper.test.begin('Adds and removes multiple todo items', 2, function suite(test) {
   casper.start('http://localhost:3000/', function() {
+    // Add items to the list
     this.fill('.todo-form', {
       todo: 'Eat pie'
     }, true);
@@ -63,9 +65,18 @@ casper.test.begin('Adds and removes multiple todo items', 2, function suite(test
 });
 
 // Test that marks todo items as done
-casper.test.begin('Marks todo items as done', 3, function suite(test) {
+casper.test.begin('Marks todo items as done', 1, function suite(test) {
   casper.start('http://localhost:3000/', function() {
-    //
+    // Add item to the list
+    this.fill('.todo-form', {
+      todo: 'Eat pie'
+    }, true);
+
+    // Mark item as complete
+    this.click('.todo-remove');
+
+    // Check that item has been marked as done
+    test.assertExists('.todo-item--done', 'Item should be marked as done');
   });
 
   casper.run(function() {
