@@ -40,86 +40,8 @@ describe('API integration', function(){
 
   it('todo.setup receives an array of todos when todo.init is called', function () {
     todo.init();
-
+    server.respond();
+    expect(setupStub.calledOnce);
+    expect(setupStub.calledWith(JSONresponse));
   });
 });
-
-/*
-stub unit test
-describe("getTweets", function () {
-    var fakeData = [
-        { 
-            created_at: "Fri Apr 05 19:39:30 +0000 2013", 
-            text: "tweet 1", 
-            retweeted: false, 
-            favorited: false, 
-            user: { name: "name 1" } 
-        }, 
-    ];
-
-    before(function () {
-        sinon.stub($, "ajax").yieldsTo("success", fakeData);
-    });
-
-    it("should $.ajax &amp; invoke callback", function (done) {
-        twitter.getTweets("elijahmanor", function (tweets) {
-            expect(tweets.length).to.be(5);
-            done();
-        });
-    });
-
-    after(function () { $.ajax.restore(); });
-});
-
-fake server unit test
-describe("getTweets - Server", function () {
-    var server, fakeData = [ ];
-
-    before(function () {
-        // Doesn’t work :( It’s JSONP!
-        server = sinon.fakeServer.create();
-        server.respondWith(
-            "GET", 
-            "https://api.twitter.com/.../elijahmanor.json?count=5",
-            [200, { "Content-Type": "application/json" }, JSON.stringify(fakeData)]
-        );
-    });
-
-    it("should $.ajax &amp; invoke callback", function (done) {
-        twitter.getTweets("elijahmanor", function (tweets) {
-            expect(tweets.length).to.be(5);
-            done();
-        }); server.respond();
-    });
-
-    after(function () { server.restore(); });
-});
-
-request unit test
-var request    = require('request')
-  , sinon      = require('sinon')
-  , getProfile = require('./gh');
-
-describe('User Profile', function(){
-  before(function(done){
-    sinon
-      .stub(request, 'get')
-      .yields(null, null, JSON.stringify({login: "bulkan"}));
-    done();
-  });
-
-  after(function(done){
-    request.get.restore();
-    done();
-  });
-
-  it('can get user profile', function(done){
-    getProfile('bulkan', function(err, result){
-      if(err) return done(err);
-      request.get.called.should.be.equal(true);
-      result.should.not.be.empty;
-      done();
-    });
-  });
-});
-*/
