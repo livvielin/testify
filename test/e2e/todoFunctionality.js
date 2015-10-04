@@ -73,7 +73,7 @@ casper.test.begin('Marks todo items as done', 1, function suite(test) {
     }, true);
 
     // Mark item as complete
-    this.click('.todo-remove');
+    this.click('.todo-done');
 
     // Check that item has been marked as done
     test.assertExists('.todo-item--done', 'Item should be marked as done');
@@ -85,9 +85,15 @@ casper.test.begin('Marks todo items as done', 1, function suite(test) {
 });
 
 // Test that ensures user cannot add empty todo items
-casper.test.begin('Ensures user cannot add empty todo items', 3, function suite(test) {
+casper.test.begin('Ensures user cannot add empty todo items', 1, function suite(test) {
   casper.start('http://localhost:3000/', function() {
-    //
+    // Add empty todo item
+    this.fill('.todo-form', {
+      todo: ''
+    }, true);
+
+    // Check that item was not added
+    test.assertDoesntExist('.todo-list .todo-item', 'Empty item should not have been added');
   });
 
   casper.run(function() {
